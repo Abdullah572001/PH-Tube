@@ -14,13 +14,23 @@ const displayCategories = (data) => {
   const categories = document.getElementById("categories");
 
   data.forEach((item) => {
-    const button = document.createElement("button");
-    button.classList = "btn";
-    button.innerText = item.category;
+    const buttonContainer = document.createElement("div");
+    buttonContainer.innerHTML = `
+        <button onclick="loadCategoriesVideos(${item.category_id})" class="btn">${item.category}</button>
+    `;
 
-    categories.appendChild(button);
+    categories.appendChild(buttonContainer);
   });
 };
+
+// create loadCategoriesVideos(); function 
+const loadCategoriesVideos = (id) => {
+  
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then( data => displayVideos(data.category))
+    .catch((error) => console.log("Cannot find data", error));
+}
 
 // create loadVideos function
 const loadVideos = () => {
@@ -46,9 +56,24 @@ function getTimeString(timeInSeconds) {
 // create displayVideos function
 const displayVideos = (data) => {
   const videoContainer = document.getElementById("video-container");
+  videoContainer.innerHTML = '';
+
+  if (data.length === 0) {
+    videoContainer.classList.remove('grid');
+    videoContainer.innerHTML = `
+      <div class="min-h-[300px] flex flex-col justify-center items-center">
+        <img src="./Assets/icon.png" />
+        <h2 class="text-center text-xl font-bold">No Content Here in this Category</h2>
+      </div>
+    `;
+    return;
+  }
+  else{
+    videoContainer.classList.add('grid');
+  }
 
   data.forEach((video) => {
-    console.log(video);
+    // console.log(video);
 
     const videoDiv = document.createElement("div");
     videoDiv.classList = "card";
@@ -59,7 +84,7 @@ const displayVideos = (data) => {
                 src=${video.thumbnail}
                 alt="Shoes" />
 
-                ${video.others.posted_date?.length ===  0 ? "" : `<span class="absolute right-2 bottom-2 bg-black text-white p-1 rounded">${getTimeString(video.others.posted_date)}</span>`}
+                ${video.others.posted_date?.length ===  0 ? "" : `<span class="absolute right-2 bottom-2 bg-black text-white text-xs p-1 rounded">${getTimeString(video.others.posted_date)}</span>`}
                 
           </figure>
           <div class="py-4 flex gap-2">
@@ -83,3 +108,5 @@ const displayVideos = (data) => {
         videoContainer.append(videoDiv);
   });
 };
+
+
