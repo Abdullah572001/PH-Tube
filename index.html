@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
-
     <header class="">
       <!-- navbar -->
-      <nav class="w-11/12 mx-auto py-4 flex justify-between items-center border-b border-gray-300">
+      <nav
+        class="w-11/12 mx-auto py-4 flex justify-between items-center border-b border-gray-300"
+      >
         <div class="w-[100px]">
           <img src="./Assets/Logo.png" alt="" />
         </div>
@@ -43,28 +44,46 @@
                 <path d="m21 21-4.3-4.3"></path>
               </g>
             </svg>
-            <input type="search" required placeholder="Search" />
+            <input id="search-input" type="search" required placeholder="Search" />
           </label>
         </div>
 
         <div>
-            <button class="btn">SORT</button>
+          <button class="btn">SORT</button>
         </div>
       </nav>
     </header>
 
     <main>
-        <!-- category section -->
-        <section id="categories" class="py-4 flex gap-6 justify-center"></section>
+      <!-- category section -->
+      <section id="categories" class="py-4 flex gap-6 justify-center"></section>
 
-        <!-- video section -->
-         <section id="video-container" class="w-11/12 mx-auto py-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></section>
+      <!-- video section -->
+      <section
+        id="video-container"
+        class="w-11/12 mx-auto py-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      ></section>
+
+      <!-- Open the modal using ID.showModal() method -->
+      <button id="modal-btn" class="btn hidden" onclick="customModal.showModal()">open modal</button>
+
+      <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+          
+            <div id="modal-container"></div>
+
+            <form class="flex justify-end mt-6" method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </main>
 
     <footer></footer>
 
-
     <!-- script aria -->
-     <script src="./js/script.js"></script>
+    <script src="./js/script.js"></script>
   </body>
 </html>
